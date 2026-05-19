@@ -29,7 +29,6 @@ namespace multiGroup {
      */
     export function receiveMessage(radioMessage: string) {
         let id = groupOf(radioMessage)
-        console.log("receiveMessage  " +radioMessage+" id "+id)
         if (id == NO_GROUP) {
             globalReceiver(messagePart(radioMessage))
         } else if (id == group) {
