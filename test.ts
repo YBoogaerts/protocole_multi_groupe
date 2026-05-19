@@ -5,8 +5,8 @@ let personnalMessage : string =""
 function inittest(){
      groupmessage = ""
      personnalMessage = ""
-    multiGroup.setGlobalReceiver((m) => assert("to global", m === "test"))
-    multiGroup.setGroupReceiver((m) => personnalMessage = m)
+    multiGroup.setGlobalReceiver((m) => assert("to global", m === "global"))
+    multiGroup.setGroupReceiver((m) => assert("to perso", m === "perso"))
     radio.onReceivedString((m)=>{
        console.log(radio.receivedPacket(RadioPacketProperty.SerialNumber))
         console.log(m)
@@ -15,9 +15,14 @@ function inittest(){
     )
 }
 
-function testMesaggeGlobal(){
-    
-    radio.sendString(multiGroup.messageToGroup("test"))
+function testMesaggeGlobal() {
+
+    radio.sendString(multiGroup.messageToGroup("global"))
+    inittest()
+}
+function testMesaggeperso() {
+    multiGroup.setGroup(3)
+    radio.sendString(multiGroup.buildMessage(3,"perso"))
     inittest()
 }
 function testGroupid(){
@@ -35,4 +40,6 @@ function assert(nom: string, condition: boolean) {
 radio.setTransmitSerialNumber(true)
 testGroupid()
 inittest()
-input.onButtonPressed(Button.A, testMesaggeGlobal)
+testMesaggeGlobal()
+inittest()
+testMesaggeperso()

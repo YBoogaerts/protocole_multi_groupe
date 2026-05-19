@@ -29,6 +29,7 @@ namespace multiGroup {
      */
     export function receiveMessage(radioMessage: string) {
         let id = groupOf(radioMessage)
+        console.log("receiveMessage  " +radioMessage+" id "+id)
         if (id == NO_GROUP) {
             globalReceiver(messagePart(radioMessage))
         } else if (id == group) {
@@ -96,7 +97,7 @@ namespace multiGroup {
     export function groupOf(recievedString: string): number {
         let id = recievedString.charCodeAt(0)
         if (id != NO_GROUP) {
-            id += GROUP_BASE
+            id -= GROUP_BASE
         }
         return id
     }
